@@ -1,0 +1,8 @@
+I'm not sure what versions of glibc this works against. I wrote it to use
+for an exploit in 2010 and it looks like it's still in the latest glibc.
+Somewhere along the line they added a new pointer but rather than use
+__builtin_expect to check the correctness they just use assert:
+1421                assert (P->fd_nextsize->bk_nextsize == P); \
+1422                assert (P->bk_nextsize->fd_nextsize == P); \
+so you can still exploit heap overflows in easy and ancient unlinking style
+on distros that build glibc with NDEBUG
